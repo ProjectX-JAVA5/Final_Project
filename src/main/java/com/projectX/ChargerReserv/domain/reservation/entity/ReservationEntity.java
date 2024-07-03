@@ -33,6 +33,7 @@ public class ReservationEntity extends BasicEntity {
     private LocalDateTime endTime;
 
     @Column(name="status")
+    @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
     @Column(name="charger_startTime")
