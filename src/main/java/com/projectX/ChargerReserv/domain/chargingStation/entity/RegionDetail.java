@@ -2,6 +2,7 @@ package com.projectX.ChargerReserv.domain.chargingStation.entity;
 
 import com.projectX.ChargerReserv.global.basic.AbstractCodedEnumConverter;
 import com.projectX.ChargerReserv.global.basic.CodedEnum;
+import com.projectX.ChargerReserv.global.error.IllegalArgumentException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -269,7 +270,6 @@ public enum RegionDetail implements CodedEnum<String> {
     public static RegionDetail fromCode(String code) {
         RegionDetail region = CODE_MAP.get(code);
         if (region == null) {
-            // TODO: 커스텀 예외로 변경
             throw new IllegalArgumentException("Invalid code: " + code);
         }
         return region;

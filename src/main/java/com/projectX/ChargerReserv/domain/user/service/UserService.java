@@ -184,12 +184,23 @@ public class UserService{
     }
 
     //로그인한 사용자 정보 가져오기
-    public ResponseEntity<UserInfo> getUserInfo(Authentication authentication) throws IOException {
+    public ResponseEntity<UserInfo> getUserInfo(Authentication authentication) {
         UserEntity user = userRepository.findByOuthId(Long.valueOf(authentication.getName()));
 
         if(user == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(new UserInfo(user.getUserId(), user.getUserName(),user.getEmail(), user.getOuthId()), HttpStatus.OK);
+    }
+
+    // 로그인한 사용자의 ID를 반환
+    public Long getLoggedInUserId(Authentication authentication) {
+        ResponseEntity<UserInfo> responseEntity = getUserInfo(authentication);
+
+        if (responseEntity.getStatusCode() != HttpStatus.OK || responseEntity.getBody() == null) {
+            throw new IllegalStateException("사용자 정보를 가져올 수 없습니다.");
+        }
+
+        return responseEntity.getBody().getUserId();
     }
 }
