@@ -4,46 +4,67 @@ import com.projectX.ChargerReserv.domain.charger.entity.ChargerEntity;
 import com.projectX.ChargerReserv.domain.user.entity.UserEntity;
 import com.projectX.ChargerReserv.global.basic.BasicEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Getter
 @Entity
 @Table(name = "reservation")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReservationEntity extends BasicEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reservationId;
+    @Column(name = "reservation_id")
+    private Long id;
 
-    @Column(name="vehicle_num")
+    @Column(name = "reservation_number", nullable = false, unique = true)
+    private String reservationNumber;
+
+    @Column(name = "vehicle_number", nullable = false)
     private String vehicleNumber;
 
-    @Column(name="startTime")
-    private LocalDateTime startTime;
+    @Column(name = "start_at", nullable = false)
+    private LocalDateTime startAt;
 
-    @Column(name="endTime")
-    private LocalDateTime endTime;
+    @Column(name = "end_at", nullable = false)
+    private LocalDateTime endAt;
 
-    @Column(name="status")
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    @Column(name="charger_startTime")
-    private LocalDateTime chargerStartTime;
+    @Column(name = "charger_start_at")
+    private LocalDateTime chargerStartAt;
 
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="charger_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "charger_id", nullable = false)
     private ChargerEntity charger;
+
+    @Builder
+    public ReservationEntity(
+            String reservationNumber,
+            String vehicleNumber,
+            LocalDateTime startAt,
+            LocalDateTime endAt,
+            ReservationStatus status,
+            UserEntity user,
+            ChargerEntity charger
+    ) {
+        this.reservationNumber = reservationNumber;
+        this.vehicleNumber = vehicleNumber;
+        this.startAt = startAt;
+        this.endAt = endAt;
+        this.status = status;
+        this.user = user;
+        this.charger = charger;
+    }
 }
