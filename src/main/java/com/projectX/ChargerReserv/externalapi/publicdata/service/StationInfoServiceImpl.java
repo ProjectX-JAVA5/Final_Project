@@ -1,8 +1,5 @@
 package com.projectX.ChargerReserv.externalapi.publicdata.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projectX.ChargerReserv.domain.chargingStation.dto.StationResponse;
@@ -11,27 +8,19 @@ import com.projectX.ChargerReserv.domain.chargingStation.entity.ChargingStationE
 import com.projectX.ChargerReserv.domain.chargingStation.entity.RegionDetail;
 import com.projectX.ChargerReserv.domain.chargingStation.entity.StatRegion;
 import com.projectX.ChargerReserv.domain.chargingStation.service.StationService;
-import com.projectX.ChargerReserv.externalapi.publicdata.config.PublicDataConfig;
 import com.projectX.ChargerReserv.externalapi.publicdata.dto.response.StationInfoResponse;
-import com.projectX.ChargerReserv.global.error.CustomExceptionHandler;
 import com.projectX.ChargerReserv.global.error.IllegalArgumentException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -44,7 +33,6 @@ import java.util.Map;
 @Slf4j
 public class StationInfoServiceImpl implements StationInfoService{
 
-    private final PublicDataConfig publicDataConfig;
     private final StationService stationService;
 
     @Value("${PUBLIC-DATA.API-URL}")
