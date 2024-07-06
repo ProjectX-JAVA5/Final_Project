@@ -67,4 +67,9 @@ public class ReservationEntity extends BasicEntity {
         this.user = user;
         this.charger = charger;
     }
+
+    public void confirm() {
+        this.status = ReservationStatus.CONFIRMED;
+        this.chargerStartAt = LocalDateTime.now();
+    }
 }
