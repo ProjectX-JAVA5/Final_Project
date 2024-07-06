@@ -184,7 +184,7 @@ public class UserService{
     }
 
     //로그인한 사용자 정보 가져오기
-    public ResponseEntity<UserInfo> getUserInfo(Authentication authentication) throws IOException {
+    public ResponseEntity<UserInfo> getUserInfo(Authentication authentication) {
         UserEntity user = userRepository.findByOuthId(Long.valueOf(authentication.getName()));
 
         if(user == null)
@@ -194,7 +194,7 @@ public class UserService{
     }
 
     // 로그인한 사용자의 ID를 반환
-    public Long getLoggedInUserId(Authentication authentication) throws IOException {
+    public Long getLoggedInUserId(Authentication authentication) {
         ResponseEntity<UserInfo> responseEntity = getUserInfo(authentication);
 
         if (responseEntity.getStatusCode() != HttpStatus.OK || responseEntity.getBody() == null) {

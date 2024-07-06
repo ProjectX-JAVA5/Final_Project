@@ -15,7 +15,6 @@ import com.projectX.ChargerReserv.global.error.NoExistException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -59,7 +58,7 @@ public class ReservationCreationService {
     /**
      * 예약의 유효성을 검사합니다.
      *
-     * @param user 예약을 생성하는 사용자.
+     * @param user    예약을 생성하는 사용자.
      * @param charger 예약에 사용할 충전기.
      */
     private void validateReservation(UserEntity user, ChargerEntity charger) {

@@ -80,4 +80,8 @@ public class ReservationEntity extends BasicEntity {
     public boolean isExpired() {
         return LocalDateTime.now().isAfter(this.endAt);
     }
+
+    public void cancel() {
+        this.status = ReservationStatus.CANCELLED;
+    }
 }
