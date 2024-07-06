@@ -13,7 +13,7 @@ public class ReservationFactory {
     public static ReservationEntity create(String vehicleNumber, UserEntity user, ChargerEntity charger) {
         String reservationNumber = ReservationNumberGenerator.generate();
         LocalDateTime startAt = LocalDateTime.now();
-        LocalDateTime endAt = startAt.plusMinutes(30);
+        LocalDateTime endAt = startAt.plusMinutes(2);
 
         return ReservationEntity.builder()
                 .reservationNumber(reservationNumber)
