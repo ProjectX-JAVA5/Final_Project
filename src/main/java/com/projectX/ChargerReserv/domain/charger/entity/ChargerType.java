@@ -3,6 +3,7 @@ package com.projectX.ChargerReserv.domain.charger.entity;
 import com.projectX.ChargerReserv.domain.chargingStation.entity.StatRegion;
 import com.projectX.ChargerReserv.global.basic.AbstractCodedEnumConverter;
 import com.projectX.ChargerReserv.global.basic.CodedEnum;
+import com.projectX.ChargerReserv.global.error.IllegalArgumentException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -50,7 +51,6 @@ public enum ChargerType implements CodedEnum<String> {
     public static ChargerType fromCode(String code) {
         ChargerType type = CODE_MAP.get(code);
         if (type == null) {
-            // TODO: 커스텀 예외로 변경
             throw new IllegalArgumentException("Invalid code: " + code);
         }
         return type;

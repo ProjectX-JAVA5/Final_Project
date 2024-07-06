@@ -3,6 +3,7 @@ package com.projectX.ChargerReserv.domain.charger.entity;
 import com.projectX.ChargerReserv.domain.chargingStation.entity.StatRegion;
 import com.projectX.ChargerReserv.global.basic.AbstractCodedEnumConverter;
 import com.projectX.ChargerReserv.global.basic.CodedEnum;
+import com.projectX.ChargerReserv.global.error.IllegalArgumentException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -42,7 +43,6 @@ public enum ChargerStatus implements CodedEnum<String> {
     public static ChargerStatus fromCode(String code) {
         ChargerStatus status = CODE_MAP.get(code);
         if (status == null) {
-            // TODO: 커스텀 예외로 변경
             throw new IllegalArgumentException("Unknown code: " + code);
         }
         return status;
