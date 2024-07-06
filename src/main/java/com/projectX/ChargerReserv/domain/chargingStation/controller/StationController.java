@@ -24,8 +24,8 @@ public class StationController {
     @PostMapping("")
     public ResponseEntity<StationInfoResponse> saveAllSation(
             @RequestHeader(value = "zcode", defaultValue = "27") String zcode,
-            @RequestHeader(value = "numOfRows") Long rows,
-            @RequestHeader(value = "pageNo") Long pageNo
+            @RequestHeader(value = "numOfRows", defaultValue = "10") Long rows,
+            @RequestHeader(value = "pageNo", defaultValue = "1") Long pageNo
     ) throws IOException {
         StationInfoResponse stationInfoResponse = stationInfoService.saveAllStationInfoByzcode(zcode, rows, pageNo);
 
