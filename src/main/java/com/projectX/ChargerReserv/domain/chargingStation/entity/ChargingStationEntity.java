@@ -19,14 +19,14 @@ import java.util.List;
 public class ChargingStationEntity extends BasicEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long chargingStationId;
+    @Column(name = "station_id")
+    private String chargingStationId;
 
     private String name;
 
-    private Long latitude;
+    private Double latitude;
 
-    private Long longitude;
+    private Double longitude;
 
     private String address;
 
