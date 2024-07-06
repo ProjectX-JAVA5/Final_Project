@@ -1,15 +1,31 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql-withvol:3306/chargerReserv?serverTimezone=Asia/Seoul
-    username: user
-    password: root
+    url: jdbc:mysql://mysql:3306/mydatabase?serverTimezone=Asia/Seoul
+    username: myuser
+    password: secret
 
   jpa:
     hibernate:
       ddl-auto: update
+      format_sql: false
+      dialect: org.hibernate.dialect.MySQLDialect
     show-sql: true
-    properties:
-      hiberenate:
-        fomat_sql: false
-        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+
+jwt:
+  secret:
+    key: greenlemonTgreenlemonTgreenlemonTgreenlemonTgreenlemonTgreenlemonTgreenlemonT
+
+kakao:
+  auth:
+    client_id: 9e51411adb4b38a50e02cea1b32383fc
+    redirect_uri: http://localhost:8080/auth/login
+
+public_data:
+  api_key: OeOmHKfplNtkYrwTfeJtZa7AeI80ow%2BvPDhdaKRYIx6%2B2nMHDmoLO5nNEmfpZgEDD1nH7N2jQIQ%2BsLf3w0OgcQ%3D%3D

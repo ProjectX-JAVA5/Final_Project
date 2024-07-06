@@ -72,4 +72,12 @@ public class ReservationEntity extends BasicEntity {
         this.status = ReservationStatus.CONFIRMED;
         this.chargerStartAt = LocalDateTime.now();
     }
+
+    public void markAsFailed() {
+        this.status = ReservationStatus.FAILED;
+    }
+
+    public boolean isExpired() {
+        return LocalDateTime.now().isAfter(this.endAt);
+    }
 }

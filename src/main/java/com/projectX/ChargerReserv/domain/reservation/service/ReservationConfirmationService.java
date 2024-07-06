@@ -7,6 +7,7 @@ import com.projectX.ChargerReserv.domain.reservation.dto.ConfirmReservationComma
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationEntity;
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationStatus;
 import com.projectX.ChargerReserv.domain.reservation.repository.ReservationRepository;
+import com.projectX.ChargerReserv.global.error.IllegalArgumentException;
 import com.projectX.ChargerReserv.global.error.NoExistException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +33,34 @@ public class ReservationConfirmationService {
     }
 
     private void validateReservation(ChargerEntity charger, ReservationEntity reservation) {
-        if (reservation.getStatus() != ReservationStatus.PENDING) {
-            throw new IllegalStateException("이미 확인된 예약입니다.");
+        if (reservation.getStatus() == ReservationStatus.PENDING) {
+            handlePendingReservation(charger, reservation);
+        } else {
+            handleInvalidReservationStatus(reservation);
         }
+    }
 
+    private void handlePendingReservation(ChargerEntity charger, ReservationEntity reservation) {
+        if (reservation.getStatus() == ReservationStatus.FAILED) {
+            throw new IllegalStateException("예약이 만료되었습니다.");
+        }
         if (charger.getStatus() != ChargerStatus.AVAILABLE) {
-            throw new IllegalStateException("사용할 수 없는 충전기입니다.");
+            throw new IllegalStateException("충전기가 사용 중입니다.");
+        }
+    }
+
+    private void handleInvalidReservationStatus(ReservationEntity reservation) {
+        switch (reservation.getStatus()) {
+            case CONFIRMED:
+                throw new IllegalStateException("이미 확인된 예약입니다.");
+            case CANCELLED:
+                throw new IllegalStateException("취소된 예약입니다.");
+            case FAILED:
+                throw new IllegalStateException("예약 시간이 초과되었습니다.");
+            case COMPLETED:
+                throw new IllegalStateException("이미 완료된 예약입니다.");
+            default:
+                throw new IllegalStateException("알 수 없는 예약 상태입니다.");
         }
     }
 }
