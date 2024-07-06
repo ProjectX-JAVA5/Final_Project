@@ -1,6 +1,5 @@
 package com.projectX.ChargerReserv.domain.user.entity;
 
-
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationEntity;
 import com.projectX.ChargerReserv.global.basic.BasicEntity;
 import jakarta.persistence.*;
@@ -28,6 +27,8 @@ public class UserEntity extends BasicEntity {
     private String email;
 
     private Long outhId;
+
+    private String refreshToken;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ReservationEntity> reservationEntityList;
