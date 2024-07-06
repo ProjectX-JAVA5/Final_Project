@@ -4,6 +4,7 @@ spring:
     url: jdbc:mysql://mysql:3306/mydatabase?serverTimezone=Asia/Seoul
     username: myuser
     password: secret
+
   profiles:
     include: API-KEY
 
@@ -28,4 +29,3 @@ spring:
     auth:
       client_id: 9e51411adb4b38a50e02cea1b32383fc
       redirect_uri: http://localhost:8080/auth/login
-
