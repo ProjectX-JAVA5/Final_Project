@@ -41,9 +41,7 @@ public class ReservationConfirmationService {
     }
 
     private void handlePendingReservation(ChargerEntity charger, ReservationEntity reservation) {
-        if (reservation.isExpired()) {
-            reservation.markAsFailed();
-            reservationRepository.save(reservation);
+        if (reservation.getStatus() == ReservationStatus.FAILED) {
             throw new IllegalStateException("예약이 만료되었습니다.");
         }
         if (charger.getStatus() != ChargerStatus.AVAILABLE) {
