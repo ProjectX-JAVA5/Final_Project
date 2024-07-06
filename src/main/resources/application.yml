@@ -20,14 +20,12 @@ spring:
     username: guest
     password: guest
 
-jwt:
-  secret:
-    key: greenlemonTgreenlemonTgreenlemonTgreenlemonTgreenlemonTgreenlemonTgreenlemonT
+  jwt:
+    secret:
+      key: greenlemonTgreenlemonTgreenlemonTgreenlemonTgreenlemonTgreenlemonTgreenlemonT
 
-kakao:
-  auth:
-    client_id: 9e51411adb4b38a50e02cea1b32383fc
-    redirect_uri: http://localhost:8080/auth/login
+  kakao:
+    auth:
+      client_id: 9e51411adb4b38a50e02cea1b32383fc
+      redirect_uri: http://localhost:8080/auth/login
 
-public_data:
-  api_key: OeOmHKfplNtkYrwTfeJtZa7AeI80ow%2BvPDhdaKRYIx6%2B2nMHDmoLO5nNEmfpZgEDD1nH7N2jQIQ%2BsLf3w0OgcQ%3D%3D
