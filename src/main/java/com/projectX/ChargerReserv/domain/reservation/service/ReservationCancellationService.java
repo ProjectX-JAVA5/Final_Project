@@ -1,10 +1,13 @@
 package com.projectX.ChargerReserv.domain.reservation.service;
 
+import com.projectX.ChargerReserv.domain.charger.repository.ChargerRepository;
 import com.projectX.ChargerReserv.domain.reservation.dto.command.CancelReservationCommand;
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationStatus;
+import com.projectX.ChargerReserv.domain.reservation.event.ReservationEvent;
 import com.projectX.ChargerReserv.domain.reservation.repository.ReservationRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -13,6 +16,8 @@ import org.springframework.stereotype.Service;
 public class ReservationCancellationService {
 
     private final ReservationRepository reservationRepository;
+    private final ChargerRepository chargerRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     public void cancelReservation(CancelReservationCommand command) {
         reservationRepository.findById(command.reservationId())
@@ -25,6 +30,8 @@ public class ReservationCancellationService {
                     }
                     reservation.cancel();
                     reservationRepository.save(reservation);
+
+                    eventPublisher.publishEvent(new ReservationEvent(reservation.getId(), reservation.getCharger().getUniqueChargerId(), ReservationStatus.CANCELLED));
                 }, () -> {
                     throw new IllegalArgumentException("예약을 찾을 수 없습니다.");
                 });

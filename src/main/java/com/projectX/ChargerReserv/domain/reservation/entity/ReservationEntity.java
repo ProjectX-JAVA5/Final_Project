@@ -73,12 +73,8 @@ public class ReservationEntity extends BasicEntity {
         this.chargerStartAt = LocalDateTime.now();
     }
 
-    public void markAsFailed() {
+    public void failed() {
         this.status = ReservationStatus.FAILED;
-    }
-
-    public boolean isExpired() {
-        return LocalDateTime.now().isAfter(this.endAt);
     }
 
     public void cancel() {
@@ -87,5 +83,9 @@ public class ReservationEntity extends BasicEntity {
 
     public void complete() {
         this.status = ReservationStatus.COMPLETED;
+    }
+
+    public boolean isExpired() {
+        return LocalDateTime.now().isAfter(this.endAt);
     }
 }

@@ -10,14 +10,14 @@ import com.projectX.ChargerReserv.domain.reservation.entity.ReservationStatus;
 import java.time.LocalDateTime;
 
 public record ReservationDetailResponse(
-       Long id,
-       String reservationNumber,
-       String vehicleNumber,
-       LocalDateTime startAt,
-       LocalDateTime endAt,
-       ReservationStatus status,
-       LocalDateTime chargerStartAt,
-       ChargerDetail charger
+        Long id,
+        String reservationNumber,
+        String vehicleNumber,
+        LocalDateTime startAt,
+        LocalDateTime endAt,
+        ReservationStatus status,
+        LocalDateTime chargerStartAt,
+        ChargerDetail charger
 ) {
 
     public record ChargerDetail(

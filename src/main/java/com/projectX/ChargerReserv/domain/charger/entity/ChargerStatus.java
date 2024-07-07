@@ -19,7 +19,8 @@ public enum ChargerStatus implements CodedEnum<String> {
     AVAILABLE("2", "사용가능"),
     CHARGING("3", "충전중"),
     OUT_OF_SERVICE("4", "운영중지"),
-    UNDER_MAINTENANCE("5", "점검중");
+    UNDER_MAINTENANCE("5", "점검중"),
+    RESERVED("6", "예약중");
 
     private final String code;
     private final String description;
