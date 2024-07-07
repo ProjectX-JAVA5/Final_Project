@@ -1,13 +1,12 @@
 package com.projectX.ChargerReserv.domain.reservation.service;
 
-import com.projectX.ChargerReserv.domain.charger.entity.ChargerEntity;
-import com.projectX.ChargerReserv.domain.charger.repository.ChargerRepository;
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationStatus;
+import com.projectX.ChargerReserv.domain.reservation.event.ReservationEvent;
 import com.projectX.ChargerReserv.domain.reservation.repository.ReservationRepository;
 import com.projectX.ChargerReserv.global.config.RabbitMQConfig;
-import com.projectX.ChargerReserv.global.error.NoExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class ReservationExpirationService {
 
     private final ReservationRepository reservationRepository;
-    private final ChargerRepository chargerRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     /**
      * 예약 만료 메시지를 처리합니다.
@@ -30,13 +29,10 @@ public class ReservationExpirationService {
     public void handleReservationExpiration(Long reservationId) {
         reservationRepository.findById(reservationId).ifPresent(reservation -> {
             if (reservation.getStatus() == ReservationStatus.PENDING && reservation.isExpired()) {
-                ChargerEntity charger = chargerRepository.findById(reservation.getCharger().getUniqueChargerId())
-                        .orElseThrow(() -> new NoExistException("충전기를 찾을 수 없습니다."));
-                charger.cancel();
-                chargerRepository.save(charger);
-
                 reservation.failed();
                 reservationRepository.save(reservation);
+
+                eventPublisher.publishEvent(new ReservationEvent(reservation.getId(), reservation.getCharger().getUniqueChargerId(), ReservationStatus.FAILED));
             }
         });
     }

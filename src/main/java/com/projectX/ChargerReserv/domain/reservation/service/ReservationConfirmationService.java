@@ -6,10 +6,12 @@ import com.projectX.ChargerReserv.domain.charger.repository.ChargerRepository;
 import com.projectX.ChargerReserv.domain.reservation.dto.command.ConfirmReservationCommand;
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationEntity;
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationStatus;
+import com.projectX.ChargerReserv.domain.reservation.event.ReservationEvent;
 import com.projectX.ChargerReserv.domain.reservation.repository.ReservationRepository;
 import com.projectX.ChargerReserv.global.error.NoExistException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -19,16 +21,21 @@ public class ReservationConfirmationService {
 
     private final ReservationRepository reservationRepository;
     private final ChargerRepository chargerRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     public void confirmReservation(ConfirmReservationCommand command) {
         ChargerEntity charger = chargerRepository.findById(command.chargerId())
                 .orElseThrow(() -> new NoExistException("충전기를 찾을 수 없습니다."));
         ReservationEntity reservation = reservationRepository.findByCharger_UniqueChargerIdAndVehicleNumber(
-                command.chargerId(), command.vehicleNumber())
+                        command.chargerId(), command.vehicleNumber())
                 .orElseThrow(() -> new NoExistException("예약을 찾을 수 없습니다."));
 
         validateReservation(charger, reservation);
-        proceedWithConfirmation(charger, reservation);
+
+        reservation.confirm();
+        reservationRepository.save(reservation);
+
+        eventPublisher.publishEvent(new ReservationEvent(reservation.getId(), charger.getUniqueChargerId(), ReservationStatus.CONFIRMED));
     }
 
     private void validateReservation(ChargerEntity charger, ReservationEntity reservation) {
@@ -53,13 +60,5 @@ public class ReservationConfirmationService {
             default:
                 throw new IllegalStateException("알 수 없는 예약 상태입니다.");
         }
-    }
-
-    private void proceedWithConfirmation(ChargerEntity charger, ReservationEntity reservation) {
-        charger.setStatus(ChargerStatus.CHARGING);
-        chargerRepository.save(charger);
-
-        reservation.confirm();
-        reservationRepository.save(reservation);
     }
 }
