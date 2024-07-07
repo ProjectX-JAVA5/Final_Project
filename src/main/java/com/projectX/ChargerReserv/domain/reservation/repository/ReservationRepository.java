@@ -18,6 +18,14 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
 
     /**
+     * 예약 ID를 기준으로 상세 예약 정보를 조회합니다.
+     *
+     * @param reservationId 예약 ID
+     * @return 예약 정보를 포함하는 Optional 객체
+     */
+    Optional<ReservationEntity> findById(Long reservationId);
+
+    /**
      * 특정 충전기 ID와 차량 번호를 기준으로 예약 정보를 조회합니다.
      *
      * @param uniqueChargerId 충전기의 고유 ID

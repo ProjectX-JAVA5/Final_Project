@@ -42,7 +42,7 @@ public class ReservationQueryController {
         return ResponseEntity.ok(reservations);
     }
 
-/*    @GetMapping("/{reservationId}")
+    @GetMapping("/{reservationId}")
     public ResponseEntity<ReservationDetailResponse> getReservationDetail(
             @PathVariable Long reservationId,
             Authentication authentication
@@ -51,5 +51,5 @@ public class ReservationQueryController {
         ReservationDetailQueryCommand command = new ReservationDetailQueryCommand(reservationId, userId);
         ReservationDetailResponse reservation = reservationQueryService.getReservationDetail(command);
         return ResponseEntity.ok(reservation);
-    }*/
+    }
 }

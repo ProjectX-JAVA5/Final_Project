@@ -29,7 +29,7 @@ public record ReservationDetailResponse(
     }
 
     public record ChargingStationDetail(
-            Long id,
+            String id,
             String name,
             Double latitude,
             Double longitude,
