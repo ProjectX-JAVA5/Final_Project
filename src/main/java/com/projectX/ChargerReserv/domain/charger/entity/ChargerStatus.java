@@ -20,7 +20,7 @@ public enum ChargerStatus implements CodedEnum<String> {
     CHARGING("3", "충전중"),
     OUT_OF_SERVICE("4", "운영중지"),
     UNDER_MAINTENANCE("5", "점검중"),
-    RESERVED("6", "예약중");
+    RESERVED("6", "예약중"),
     UNDEFINE("9", "정의되지않음");
 
 
