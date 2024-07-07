@@ -1,6 +1,6 @@
 package com.projectX.ChargerReserv.externalapi.publicdata.dto.response;
 
-import com.projectX.ChargerReserv.domain.chargingStation.dto.StationResponse;
+import com.projectX.ChargerReserv.domain.charger.dto.response.ChargerResponse;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class StationInfoResponse {
+public class ChargerInfoResponse {
     private Long totalCount;
-    private List<StationResponse> stationList;
+    private List<ChargerResponse> chargerList;
 }

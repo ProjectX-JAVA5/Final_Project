@@ -44,8 +44,6 @@ public class StationInfoServiceImpl implements StationInfoService{
     @Override
     public StationInfoResponse saveAllStationInfoByzcode(String Inputzcode, Long rows, Long pageNo) throws IOException {
 
-        Map<String, Object> result = new HashMap<>();
-
         StringBuilder urlBuilder = new StringBuilder(apiUrl + "/getChargerInfo"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + apiKey); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(pageNo.toString(), "UTF-8")); /*페이지번호*/
