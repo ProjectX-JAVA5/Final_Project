@@ -3,10 +3,7 @@ package com.projectX.ChargerReserv.domain.chargingStation.entity;
 import com.projectX.ChargerReserv.domain.charger.entity.ChargerEntity;
 import com.projectX.ChargerReserv.global.basic.BasicEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -39,5 +36,6 @@ public class ChargingStationEntity extends BasicEntity {
     private Business busiId;
 
     @OneToMany(mappedBy = "station", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<ChargerEntity> chargerEntityList;
 }

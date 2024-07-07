@@ -6,10 +6,7 @@ import com.projectX.ChargerReserv.domain.chargingStation.entity.StatRegion;
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationEntity;
 import com.projectX.ChargerReserv.global.basic.BasicEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -39,6 +36,7 @@ public class ChargerEntity extends BasicEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="station_id")
+    @ToString.Exclude
     private ChargingStationEntity station;
 
     @Version
