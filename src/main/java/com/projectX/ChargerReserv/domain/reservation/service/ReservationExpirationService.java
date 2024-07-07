@@ -35,7 +35,7 @@ public class ReservationExpirationService {
                 charger.cancel();
                 chargerRepository.save(charger);
 
-                reservation.markAsFailed();
+                reservation.failed();
                 reservationRepository.save(reservation);
             }
         });
