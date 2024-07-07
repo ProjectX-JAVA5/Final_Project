@@ -6,6 +6,7 @@ import com.projectX.ChargerReserv.domain.reservation.entity.ReservationEntity;
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationStatus;
 import com.projectX.ChargerReserv.domain.reservation.repository.ReservationRepository;
 import com.projectX.ChargerReserv.global.error.IllegalArgumentException;
+import com.projectX.ChargerReserv.global.error.NoExistException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,9 @@ public class ReservationCompletionService {
             throw new IllegalArgumentException("예약 상태가 완료할 수 있는 상태가 아닙니다.");
         }
 
-        ChargerEntity charger = reservation.getCharger();
+        ChargerEntity charger = chargerRepository.findById(reservation.getCharger().getUniqueChargerId())
+                .orElseThrow(() -> new NoExistException("충전기를 찾을 수 없습니다."));
+
         charger.complete();
         chargerRepository.save(charger);
 
