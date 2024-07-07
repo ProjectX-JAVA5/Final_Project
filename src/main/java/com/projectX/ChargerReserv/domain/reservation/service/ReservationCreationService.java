@@ -3,7 +3,7 @@ package com.projectX.ChargerReserv.domain.reservation.service;
 import com.projectX.ChargerReserv.domain.charger.entity.ChargerEntity;
 import com.projectX.ChargerReserv.domain.charger.entity.ChargerStatus;
 import com.projectX.ChargerReserv.domain.charger.repository.ChargerRepository;
-import com.projectX.ChargerReserv.domain.reservation.dto.CreateReservationCommand;
+import com.projectX.ChargerReserv.domain.reservation.dto.command.CreateReservationCommand;
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationEntity;
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationStatus;
 import com.projectX.ChargerReserv.domain.reservation.repository.ReservationRepository;

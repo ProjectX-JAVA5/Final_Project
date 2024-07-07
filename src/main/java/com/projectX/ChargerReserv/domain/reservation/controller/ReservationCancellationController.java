@@ -1,6 +1,6 @@
 package com.projectX.ChargerReserv.domain.reservation.controller;
 
-import com.projectX.ChargerReserv.domain.reservation.dto.CancelReservationCommand;
+import com.projectX.ChargerReserv.domain.reservation.dto.command.CancelReservationCommand;
 import com.projectX.ChargerReserv.domain.reservation.service.ReservationCancellationService;
 import com.projectX.ChargerReserv.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
