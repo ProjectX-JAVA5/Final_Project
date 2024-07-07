@@ -26,25 +26,17 @@ public class ReservationConfirmationService {
         ReservationEntity reservation = reservationRepository.findByCharger_UniqueChargerIdAndVehicleNumber(
                 command.chargerId(), command.vehicleNumber())
                 .orElseThrow(() -> new NoExistException("예약을 찾을 수 없습니다."));
+
         validateReservation(charger, reservation);
-        reservation.confirm();
-        reservationRepository.save(reservation);
+        proceedWithConfirmation(charger, reservation);
     }
 
     private void validateReservation(ChargerEntity charger, ReservationEntity reservation) {
-        if (reservation.getStatus() == ReservationStatus.PENDING) {
-            handlePendingReservation(charger, reservation);
-        } else {
+        if (reservation.getStatus() != ReservationStatus.PENDING) {
             handleInvalidReservationStatus(reservation);
         }
-    }
-
-    private void handlePendingReservation(ChargerEntity charger, ReservationEntity reservation) {
-        if (reservation.getStatus() == ReservationStatus.FAILED) {
-            throw new IllegalStateException("예약이 만료되었습니다.");
-        }
-        if (charger.getStatus() != ChargerStatus.AVAILABLE) {
-            throw new IllegalStateException("충전기가 사용 중입니다.");
+        if (charger.getStatus() != ChargerStatus.RESERVED) {
+            throw new IllegalStateException("충전기가 예약되지 않았습니다.");
         }
     }
 
@@ -61,5 +53,13 @@ public class ReservationConfirmationService {
             default:
                 throw new IllegalStateException("알 수 없는 예약 상태입니다.");
         }
+    }
+
+    private void proceedWithConfirmation(ChargerEntity charger, ReservationEntity reservation) {
+        charger.setStatus(ChargerStatus.CHARGING);
+        chargerRepository.save(charger);
+
+        reservation.confirm();
+        reservationRepository.save(reservation);
     }
 }
