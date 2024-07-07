@@ -21,6 +21,8 @@ public enum ChargerStatus implements CodedEnum<String> {
     OUT_OF_SERVICE("4", "운영중지"),
     UNDER_MAINTENANCE("5", "점검중"),
     RESERVED("6", "예약중");
+    UNDEFINE("9", "정의되지않음");
+
 
     private final String code;
     private final String description;
