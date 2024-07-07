@@ -1,6 +1,6 @@
 package com.projectX.ChargerReserv.domain.reservation.service;
 
-import com.projectX.ChargerReserv.domain.reservation.dto.CancelReservationCommand;
+import com.projectX.ChargerReserv.domain.reservation.dto.command.CancelReservationCommand;
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationStatus;
 import com.projectX.ChargerReserv.domain.reservation.repository.ReservationRepository;
 import jakarta.transaction.Transactional;
