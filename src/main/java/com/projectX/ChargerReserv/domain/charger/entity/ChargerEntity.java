@@ -41,6 +41,18 @@ public class ChargerEntity extends BasicEntity {
     @JoinColumn(name="station_id")
     private ChargingStationEntity station;
 
-    @OneToMany(mappedBy = "charger", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ReservationEntity> reservationEntityList;
+    @Version
+    private Long version;
+
+    public void available() {
+        this.status = ChargerStatus.AVAILABLE;
+    }
+
+    public void charging() {
+        this.status = ChargerStatus.CHARGING;
+    }
+
+    public void reserved() {
+        this.status = ChargerStatus.RESERVED;
+    }
 }

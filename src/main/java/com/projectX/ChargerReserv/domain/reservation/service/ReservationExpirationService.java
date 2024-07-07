@@ -1,10 +1,12 @@
 package com.projectX.ChargerReserv.domain.reservation.service;
 
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationStatus;
+import com.projectX.ChargerReserv.domain.reservation.event.ReservationEvent;
 import com.projectX.ChargerReserv.domain.reservation.repository.ReservationRepository;
 import com.projectX.ChargerReserv.global.config.RabbitMQConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class ReservationExpirationService {
 
     private final ReservationRepository reservationRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     /**
      * 예약 만료 메시지를 처리합니다.
@@ -26,8 +29,10 @@ public class ReservationExpirationService {
     public void handleReservationExpiration(Long reservationId) {
         reservationRepository.findById(reservationId).ifPresent(reservation -> {
             if (reservation.getStatus() == ReservationStatus.PENDING && reservation.isExpired()) {
-                reservation.markAsFailed();
+                reservation.failed();
                 reservationRepository.save(reservation);
+
+                eventPublisher.publishEvent(new ReservationEvent(reservation.getId(), reservation.getCharger().getUniqueChargerId(), ReservationStatus.FAILED));
             }
         });
     }

@@ -29,8 +29,4 @@ public class UserEntity extends BasicEntity {
     private Long outhId;
 
     private String refreshToken;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ReservationEntity> reservationEntityList;
-
 }

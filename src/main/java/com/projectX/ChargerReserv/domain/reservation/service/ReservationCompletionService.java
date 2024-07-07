@@ -2,10 +2,12 @@ package com.projectX.ChargerReserv.domain.reservation.service;
 
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationEntity;
 import com.projectX.ChargerReserv.domain.reservation.entity.ReservationStatus;
+import com.projectX.ChargerReserv.domain.reservation.event.ReservationEvent;
 import com.projectX.ChargerReserv.domain.reservation.repository.ReservationRepository;
 import com.projectX.ChargerReserv.global.error.IllegalArgumentException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class ReservationCompletionService {
 
     private final ReservationRepository reservationRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     public void completeReservation(Long reservationId) {
         ReservationEntity reservation = reservationRepository.findById(reservationId)
@@ -25,5 +28,7 @@ public class ReservationCompletionService {
 
         reservation.complete();
         reservationRepository.save(reservation);
+
+        eventPublisher.publishEvent(new ReservationEvent(reservation.getId(), reservation.getCharger().getUniqueChargerId(), ReservationStatus.COMPLETED));
     }
 }

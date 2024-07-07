@@ -1,6 +1,6 @@
 package com.projectX.ChargerReserv.domain.reservation.controller;
 
-import com.projectX.ChargerReserv.domain.reservation.dto.CreateReservationRequest;
+import com.projectX.ChargerReserv.domain.reservation.dto.request.CreateReservationRequest;
 import com.projectX.ChargerReserv.domain.reservation.service.ReservationCreationService;
 import com.projectX.ChargerReserv.domain.user.service.UserService;
 import jakarta.validation.Valid;

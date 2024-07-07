@@ -1,4 +1,4 @@
-package com.projectX.ChargerReserv.domain.reservation.dto;
+package com.projectX.ChargerReserv.domain.reservation.dto.command;
 
 import lombok.Builder;
 
