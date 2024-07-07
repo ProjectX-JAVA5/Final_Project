@@ -32,7 +32,4 @@ public class ChargerEntity extends BasicEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ChargingStation_id")
     private ChargingStationEntity station;
-
-    @OneToMany(mappedBy = "charger", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ReservationEntity> reservationEntityList;
 }
