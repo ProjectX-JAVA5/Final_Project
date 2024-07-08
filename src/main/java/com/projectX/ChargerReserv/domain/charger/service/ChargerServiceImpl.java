@@ -22,7 +22,10 @@ public class ChargerServiceImpl implements ChargerService{
 
     @Override
     public void saveCharger(ChargerEntity chargerEntity) {
-        chargerRepository.save(chargerEntity);
+        Optional <ChargerEntity> charger = Optional.ofNullable(chargerRepository.findByStationAndChargerId(chargerEntity.getStation(), chargerEntity.getChargerId()));
+        if(charger.isEmpty()) {
+            chargerRepository.save(chargerEntity);
+        }
     }
 
     @Override

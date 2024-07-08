@@ -119,8 +119,8 @@ public class StationInfoServiceImpl implements StationInfoService{
                             .busiId(Business.fromCode(busiId))
                             .build();
                     try {
+                        //System.out.println("Save chargingStation : " + chargingStation.toString());
                         stationService.saveStation(chargingStation);
-                        System.out.println("Save chargingStation : " + chargingStation.toString());
 
                         stationResponseList.add(stationResponse);
                     } catch (IllegalArgumentException e) {
