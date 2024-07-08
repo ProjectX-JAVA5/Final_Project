@@ -35,6 +35,17 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     Optional<ReservationEntity> findByCharger_UniqueChargerIdAndVehicleNumber(Long uniqueChargerId, String vehicleNumber);
 
     /**
+     * 특정 충전기 ID와 차량 번호 및 상태가 PENDING인 예약 정보를 조회합니다.
+     *
+     * @param uniqueChargerId 충전기의 고유 ID
+     * @param vehicleNumber   차량 번호
+     * @param status          예약 상태
+     * @return 찾아진 예약 정보를 포함하는 Optional 객체
+     */
+    Optional<ReservationEntity> findByCharger_UniqueChargerIdAndVehicleNumberAndStatus(
+            Long uniqueChargerId, String vehicleNumber, ReservationStatus status);
+
+    /**
      * 특정 사용자가 특정 상태의 예약을 가지고 있는지 여부를 반환합니다.
      *
      * @param user   사용자 엔티티
